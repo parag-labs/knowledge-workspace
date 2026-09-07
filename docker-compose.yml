@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
+
+  # Optional Postgres for the self-host persistence layer (the Store in src/db). The demo app
+  # runs client-side and does not require it; bring it up to run `pnpm db:migrate` or the
+  # integration test against a real database.
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: knowledge_workspace
+  #   ports:
+  #     - "5432:5432"
