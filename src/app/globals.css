@@ -1,0 +1,240 @@
+:root {
+  --bg: #0b0f19;
+  --panel: #111726;
+  --panel-2: #0e1420;
+  --border: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #6366f1;
+  --good: #22c55e;
+  --bad: #ef4444;
+  --warn: #f59e0b;
+  --cyan: #22d3ee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  height: 100%;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+.topbar h1 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  height: calc(100vh - 53px);
+}
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+.graph-pane {
+  position: relative;
+  border-right: 1px solid var(--border);
+  min-height: 420px;
+}
+
+.inspector {
+  padding: 16px;
+  overflow-y: auto;
+  background: var(--panel-2);
+}
+.inspector h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin: 18px 0 8px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+input,
+button,
+select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 13px;
+}
+input {
+  flex: 1;
+  min-width: 200px;
+}
+button.run {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.run:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.samples {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.chip {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.chip:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.answer {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.answer.insufficient {
+  border-left-color: var(--warn);
+}
+
+.evidence {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: var(--panel);
+}
+.evidence .src {
+  color: var(--cyan);
+  font-size: 12px;
+  font-family: ui-monospace, monospace;
+}
+.evidence .conf {
+  float: right;
+  font-size: 11px;
+  color: var(--muted);
+}
+.evidence .body {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.event {
+  display: flex;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+}
+.event:last-child {
+  border-bottom: none;
+}
+.tag {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+.tag.info { background: rgba(99, 102, 241, 0.18); color: #a5b4fc; }
+.tag.ok { background: rgba(34, 197, 94, 0.18); color: #86efac; }
+.tag.warn { background: rgba(245, 158, 11, 0.18); color: #fcd34d; }
+.tag.bad { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+
+.muted { color: var(--muted); }
+.mono { font-family: ui-monospace, monospace; font-size: 12px; }
+
+/* --- React Flow theming ---
+   React Flow ships its own stylesheet that loads after this file with equal specificity, so
+   its default (white bg) node rule was winning and our light theme text became invisible
+   (light-on-white). Use higher-specificity selectors + !important so labels stay readable. */
+.react-flow__node.react-flow__node-default {
+  background: var(--panel) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--accent) !important;
+  border-radius: 10px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  width: 160px;
+  padding: 8px 10px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+/* Colour nodes by entity kind via a data-driven class we set on each node. */
+.react-flow__node.kind-Decision { border-color: var(--accent) !important; }
+.react-flow__node.kind-Document { border-color: var(--cyan) !important; }
+.react-flow__node.kind-Requirement { border-color: var(--warn) !important; }
+.react-flow__node.kind-Meeting { border-color: #f472b6 !important; }
+.react-flow__node.kind-Person { border-color: var(--good) !important; }
+.react-flow__node.kind-Technology { border-color: #38bdf8 !important; }
+.react-flow__node.seed { box-shadow: 0 0 0 2px var(--good) !important; }
+.react-flow__handle {
+  background: var(--accent);
+  border: 1px solid var(--bg);
+}
+.react-flow__edge-path {
+  stroke: var(--muted);
+}
+.react-flow__edge-text {
+  fill: var(--text);
+  font-size: 9px;
+}
+.react-flow__edge-textbg {
+  fill: var(--panel);
+}
+.react-flow__controls {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: var(--panel) !important;
+  border-bottom: 1px solid var(--border) !important;
+  width: 26px;
+  height: 26px;
+}
+.react-flow__controls-button:hover {
+  background: #1b2335 !important;
+}
+.react-flow__controls-button svg {
+  fill: var(--text) !important;
+}
